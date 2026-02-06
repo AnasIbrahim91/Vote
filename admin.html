@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <h2>Upload Voters</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx" required>
+        <h2>Set Candidates</h2>
+        <label for="candidate_ids">Candidate IDs (comma-separated):</label>
+        <input type="text" id="candidate_ids" name="candidate_ids" placeholder="e.g., 1,2,3">
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Live Results</h2>
+    <table border="1">
+        <tr>
+            <th>Candidate Name</th>
+            <th>Votes</th>
+        </tr>
+        {% for result in results %}
+            <tr>
+                <td>{{ result.name }}</td>
+                <td>{{ result.votes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

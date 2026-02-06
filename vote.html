@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vote</title>
+    <script>
+        function validateSelection() {
+            const checkboxes = document.querySelectorAll('input[name="candidates"]:checked');
+            if (checkboxes.length !== 9) {
+                alert('You must select exactly 9 candidates.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Vote for Candidates</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="POST" onsubmit="return validateSelection();">
+        {% for candidate in candidates %}
+            <input type="checkbox" id="cand_{{ candidate.id }}" name="candidates" value="{{ candidate.id }}">
+            <label for="cand_{{ candidate.id }}">{{ candidate.name }}</label><br>
+        {% endfor %}
+        <button type="submit">Submit Vote</button>
+    </form>
+</body>
+</html>
